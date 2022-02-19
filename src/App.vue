@@ -35,6 +35,7 @@ const testClick = () => (checked.value = checked.value ? false : true);
 					be linked to a series of rabies cases springing up around
 					the country.
 				</p>
+				<p>Hello, I'm MC</p>
 			</div>
 			<!-- ... -->
 		</article>
