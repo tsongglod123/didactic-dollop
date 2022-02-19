@@ -1,5 +1,27 @@
 # INT203 project
 
+**Table of Contents**
+  - [Get Started](#get-started)
+  - [Frameworks](#frameworks)
+    - [JS Frameworks](#js-frameworks)
+    - [CSS Frameworks](#css-frameworks)
+  - [Team](#team)
+  - [Instructor](#instructor)
+
+## Get Started
+To participate, please follow these steps
+1. Clone the project
+   ```
+   git clone https://github.com/tsongglod123/didactic-dollop.git
+   ```
+2. Run this command
+   ```
+   npm install
+   npm run dev
+   ```
+3. Enjoy!
+
+## Frameworks
 ### JS Frameworks
 - [Vue.js](https://vuejs.org/guide/introduction.html)
 ### CSS Frameworks
