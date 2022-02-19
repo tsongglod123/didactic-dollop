@@ -38,11 +38,11 @@ To participate, please follow these steps
 ## Team
 | No.  | ID          | Full name                                              |
 | :--- | :---------- | :----------------------------------------------------- |
-| 1    | 63130500039 | [fname lname](https://github.com/NikLaz101)            |
+| 1    | 63130500039 | [Denphum Nakglam](https://github.com/NikLaz101)            |
 | 2    | 63130500042 | [Songglod Petchamras](https://github.com/tsongglod123) |
-| 3    | 63130500046 | [fname lname](https://github.com/63130500046)          |
-| 4    | 63130500048 | [fname lname](https://github.com/hunnymc)              |
-| 5    | 63130500053 | [fname lname](https://github.com/bombenten)            |
+| 3    | 63130500046 | [Thanakrit Paithun](https://github.com/63130500046)          |
+| 4    | 63130500048 | [Thanaphon Sukkasem](https://github.com/hunnymc)              |
+| 5    | 63130500053 | [Thanatorn Roswan](https://github.com/bombenten)            |
 
 ## Instructor
 [Umaporn Supasitthimethee](https://github.com/umaporn-sup)
