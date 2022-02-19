@@ -15,22 +15,29 @@ const inputSet = ref([]);
 document.body.addEventListener("keydown", (e) => {
 	switch (e.keyCode) {
 		case 32:
-			inputKey.value.push(e.keyCode);
 			inputSet.value.push(
 				inputKey.value.splice(0, inputKey.value.length)
 			);
 			break;
 		case 37:
-			inputKey.value.push(e.keyCode);
+			if (inputKey.value.length <= 5) {
+				inputKey.value.push(e.keyCode);
+			}
 			break;
 		case 38:
-			inputKey.value.push(e.keyCode);
+			if (inputKey.value.length <= 5) {
+				inputKey.value.push(e.keyCode);
+			}
 			break;
 		case 39:
-			inputKey.value.push(e.keyCode);
+			if (inputKey.value.length <= 5) {
+				inputKey.value.push(e.keyCode);
+			}
 			break;
 		case 40:
-			inputKey.value.push(e.keyCode);
+			if (inputKey.value.length <= 5) {
+				inputKey.value.push(e.keyCode);
+			}
 			break;
 
 		default:
@@ -48,11 +55,11 @@ document.body.addEventListener("keydown", (e) => {
 			{{ code }}: {{ arrow }}
 		</div>
 	</div>
-	<div>user input: {{ inputKey }}</div>
-	<div>record: {{ inputSet }}</div>
+	<div>User input: {{ inputKey }}</div>
+	<div>Record</div>
 	<ul>
 		<li v-for="(keySet, index) in inputSet" :key="index">
-			{{ keySet }}
+			{{ index + 1 }}: {{ keySet }}
 		</li>
 	</ul>
 </template>
