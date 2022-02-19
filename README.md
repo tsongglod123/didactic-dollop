@@ -1,6 +1,5 @@
 # INT203 project
 
-## Frameworks
 ### JS Frameworks
 - [Vue.js](https://vuejs.org/guide/introduction.html)
 ### CSS Frameworks
