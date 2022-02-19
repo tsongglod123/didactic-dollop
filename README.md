@@ -19,6 +19,7 @@ To participate, please follow these steps
    ```
 2. Run this command
    ```
+   cd didactic-dollop
    npm install
    npm run dev
    ```
