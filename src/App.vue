@@ -36,6 +36,7 @@ const testClick = () => (checked.value = checked.value ? false : true);
 					the country.
 				</p>
 				<p>Thanakrit: I was Here.</p>
+				<p>Hello, I'm MC</p>
 			</div>
 			<!-- ... -->
 		</article>
