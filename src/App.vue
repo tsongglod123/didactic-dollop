@@ -1,5 +1,6 @@
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive } from "vue";
+
 const arrowKey = reactive({
 	37: "arrowLeft",
 	38: "arrowUp",
@@ -8,8 +9,33 @@ const arrowKey = reactive({
 });
 const inputKey = ref([]);
 
+// Record all of user inputs
+const inputSet = ref([]);
+
 document.body.addEventListener("keydown", (e) => {
-	inputKey.value.push(e.keyCode);
+	switch (e.keyCode) {
+		case 32:
+			inputKey.value.push(e.keyCode);
+			inputSet.value.push(
+				inputKey.value.splice(0, inputKey.value.length)
+			);
+			break;
+		case 37:
+			inputKey.value.push(e.keyCode);
+			break;
+		case 38:
+			inputKey.value.push(e.keyCode);
+			break;
+		case 39:
+			inputKey.value.push(e.keyCode);
+			break;
+		case 40:
+			inputKey.value.push(e.keyCode);
+			break;
+
+		default:
+			break;
+	}
 });
 </script>
 
@@ -22,7 +48,13 @@ document.body.addEventListener("keydown", (e) => {
 			{{ code }}: {{ arrow }}
 		</div>
 	</div>
-	<div>{{ inputKey }}</div>
+	<div>user input: {{ inputKey }}</div>
+	<div>record: {{ inputSet }}</div>
+	<ul>
+		<li v-for="(keySet, index) in inputSet" :key="index">
+			{{ keySet }}
+		</li>
+	</ul>
 </template>
 
 <style></style>
