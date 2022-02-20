@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive , computed } from "vue";
 
 const arrowKey = reactive({
     37: "<svg xmlns='http://www.w3.org/2000/svg' class='h-36 w-36' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z'/></svg>",
@@ -20,6 +20,20 @@ const inputKey = ref([]);
 const inputSet = ref([]); // Record all of user inputs
 const patternSet = ref([]);
 const isClick = ref(false);
+let scores = 0;
+let count = 0;
+
+function resetCount() {
+	count = 0;
+}
+const countFunc = computed(() => {
+	for(let i = 0; i <= inputSet.value.length; i++){
+		if(inputKey.value[i] === patternSet.value[i]){
+			count++;
+		}
+	} 
+	scores += count;
+	});
 
 function randomSet() {
     isClick.value = true;
@@ -29,6 +43,8 @@ function randomSet() {
         patternSet.value.push(arrowKeyFilled[arrowKeyCode[rand]]);
     }
 }
+
+
 
 document.body.addEventListener("keydown", (e) => {
     switch (e.keyCode) {
@@ -41,6 +57,7 @@ document.body.addEventListener("keydown", (e) => {
                     inputKey.value.splice(0, inputKey.value.length)
                 );
                 randomSet();
+				resetCount();
             }
             break;
         case 37:
@@ -98,6 +115,8 @@ document.body.addEventListener("keydown", (e) => {
             </div>
         </div>
     </div>
+	<div>Count : {{count}}</div>
+	<div> Score: {{scores}}</div>
     <div>Record</div>
     <ul>
         <li v-for="(keySet, index) in inputSet" :key="index">
