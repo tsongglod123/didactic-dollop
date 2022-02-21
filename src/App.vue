@@ -118,12 +118,6 @@ document.body.addEventListener("keydown", (e) => {
 	</div>
 	<div>Counts: {{ counts }}</div>
 	<div>Score: {{ scores }}</div>
-	<div>Record</div>
-	<ul>
-		<li v-for="(keySet, index) in inputSet" :key="index">
-			{{ index + 1 }}: {{ keySet }}
-		</li>
-	</ul>
 </template>
 
 <style></style>
