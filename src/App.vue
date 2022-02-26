@@ -32,7 +32,6 @@ const acc = ref(0)
 const timeCount = ref(30000);
 const isStart = ref(false);
 
-
 const countdown = setInterval(() => {
 	if (isStart.value) {
 		timeCount.value === 0
@@ -51,8 +50,6 @@ const checkScore = (input) => {
 	});
 	acc.value = ((scores.value / counts.value) * 100).toFixed(2)
 };
-
-
 
 const randomSet = () => {
 	isClick.value = true;
@@ -115,13 +112,17 @@ document.body.addEventListener("keydown", (e) => {
 		}
 	}
 });
+
 </script>
 
 <template>
-	<div class="container mx-auto flex justify-center h-[35rem] min-w-[764px] m-20 p-20 bg-base-300 rounded-box">
+	<div
+		class="container mx-auto flex justify-center h-[35rem] min-w-[764px] m-20 p-20 bg-base-300 rounded-box"
+	>
+
 		<div class="grid justify-items-center">
 			<div id="start-game" v-show="!isClick">
-				<iframe
+				<!-- <iframe
 					:src="
 						isClick
 							? 'https://giphy.com/embed/euGq9pgXoOVJcVhwRF'
@@ -131,7 +132,7 @@ document.body.addEventListener("keydown", (e) => {
 					height="330"
 					frameborder="0"
 					class="giphy-embed"
-				></iframe>
+				></iframe>-->
 				<div class="flex justify-center gap-4">
 					<button class="btn btn-primary" type="button" @click.left="randomSet">CLICK TO START</button>
 					<!-- <p class="self-center font-semibold uppercase">or press</p>
@@ -173,8 +174,12 @@ document.body.addEventListener("keydown", (e) => {
 					<div class="text-[30px] mx-auto">{{ acc }}%</div>
 				</div>
 			</div>
+			<div>
+				<progress class="progress progress-secondary w-100" :value="timeCount/1000" max="30"></progress>
+			</div>
 		</div>
 	</div>
 </template>
 
-<style></style>
+<style>
+</style>
