@@ -175,7 +175,7 @@ document.body.addEventListener("keydown", (e) => {
 				</div>
 			</div>
 			<div>
-				<progress class="progress progress-secondary w-100" :value="timeCount/1000" max="30"></progress>
+				<progress class="progress progress-primary w-100" :value="timeCount/1000" max="30"></progress>
 			</div>
 		</div>
 	</div>
