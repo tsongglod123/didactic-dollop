@@ -70,7 +70,7 @@ document.body.addEventListener("keydown", (e) => {
 		switch (e.keyCode) {
 			// space
 			case 32:
-				isStart.value = true;
+				// isStart.value = true;
 				inputSet.value.push(
 					inputKey.value.splice(0, inputKey.value.length)
 				);
@@ -80,6 +80,7 @@ document.body.addEventListener("keydown", (e) => {
 			// left
 			case 37:
 				if (inputKey.value.length <= 5) {
+					isStart.value = true;
 					inputKey.value.push(e.keyCode);
 					count();
 				}
@@ -87,6 +88,7 @@ document.body.addEventListener("keydown", (e) => {
 			// up
 			case 38:
 				if (inputKey.value.length <= 5) {
+					isStart.value = true;
 					inputKey.value.push(e.keyCode);
 					count();
 				}
@@ -94,6 +96,7 @@ document.body.addEventListener("keydown", (e) => {
 			// right
 			case 39:
 				if (inputKey.value.length <= 5) {
+					isStart.value = true;
 					inputKey.value.push(e.keyCode);
 					count();
 				}
@@ -101,6 +104,7 @@ document.body.addEventListener("keydown", (e) => {
 			// down
 			case 40:
 				if (inputKey.value.length <= 5) {
+					isStart.value = true;
 					inputKey.value.push(e.keyCode);
 					count();
 				}
