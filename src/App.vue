@@ -28,8 +28,10 @@ const patternSet = ref({
 const isClick = ref(false);
 const scores = ref(0);
 const counts = ref(0);
+const acc = ref(0)
 const timeCount = ref(30000);
 const isStart = ref(false);
+
 
 const countdown = setInterval(() => {
 	if (isStart.value) {
@@ -47,7 +49,10 @@ const checkScore = (input) => {
 			scores.value++;
 		}
 	});
+	acc.value = ((scores.value / counts.value) * 100).toFixed(2)
 };
+
+
 
 const randomSet = () => {
 	isClick.value = true;
@@ -109,57 +114,63 @@ document.body.addEventListener("keydown", (e) => {
 </script>
 
 <template>
-	<div class="flex justify-center">
-		<iframe
-			:src="
-				isClick
-					? 'https://giphy.com/embed/euGq9pgXoOVJcVhwRF'
-					: 'https://giphy.com/embed/8m4R4pvViWtRzbloJ1'
-			"
-			width="250"
-			height="330"
-			frameborder="0"
-			class="giphy-embed"
-			allowfullscreen
-		></iframe>
-	</div>
-	<div id="start-game" v-show="!isClick">
-		<div class="flex justify-center gap-4">
-			<button
-				class="btn btn-primary"
-				type="button"
-				@click.left="randomSet"
-			>
-				CLICK TO START
-			</button>
-			<!-- <p class="self-center font-semibold uppercase">or press</p>
-			<kbd class="kbd kbd-lg">ENTER</kbd> -->
-		</div>
-	</div>
-	<!-- Countdown -->
-	<p
-		style="text-align: center"
-		:class="timeCount <= 10000 ? timeTextAlert : timeText"
-		v-show="isClick"
-	>
-		{{ timeCount === 0 ? "TIME OUT!" : (timeCount / 1e3).toFixed(2) + "s" }}
-	</p>
-	<div id="arrow-display">
-		<div class="flex justify-center" id="arrow-key-pattern-display">
-			<div v-for="pattern in patternSet.arrowIcon">
-				<span v-html="pattern"></span>
+	<div class="container mx-auto flex justify-center h-[35rem] min-w-[764px] m-20 p-20 bg-base-300 rounded-box">
+		<div class="grid justify-items-center">
+			<div id="start-game" v-show="!isClick">
+				<iframe
+					:src="
+						isClick
+							? 'https://giphy.com/embed/euGq9pgXoOVJcVhwRF'
+							: 'https://giphy.com/embed/8m4R4pvViWtRzbloJ1'
+					"
+					width="250"
+					height="330"
+					frameborder="0"
+					class="giphy-embed"
+				></iframe>
+				<div class="flex justify-center gap-4">
+					<button class="btn btn-primary" type="button" @click.left="randomSet">CLICK TO START</button>
+					<!-- <p class="self-center font-semibold uppercase">or press</p>
+					<kbd class="kbd kbd-lg">ENTER</kbd>-->
+				</div>
 			</div>
 		</div>
-		<div class="grid justify-items-center" id="arrow-key-user-input">
-			<div class="inline-grid grid-cols-6">
-				<div v-for="input in inputKey">
-					<span v-html="arrowKey[input]"></span>
+		<!-- Countdown -->
+		<div v-show="isClick" class="container mx-auto justify-items-center justify-center">
+			<p
+				class="flex justify-center"
+				:class="timeCount <= 10000 ? timeTextAlert : timeText"
+			>{{ timeCount === 0 ? "TIME OUT!" : (timeCount / 1e3).toFixed(2) + "s" }}</p>
+			<div class="grid justify-items-center" id="arrow-display">
+				<div class="flex" id="arrow-key-pattern-display">
+					<div v-for="pattern in patternSet.arrowIcon">
+						<span v-html="pattern"></span>
+					</div>
+				</div>
+				<div class="grid justify-items-center h-[8rem]" id="arrow-key-user-input">
+					<div class="inline-grid grid-cols-6">
+						<div v-for="input in inputKey">
+							<span v-html="arrowKey[input]"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mx-auto w-[32rem] flex">
+				<div class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center">
+					<div class="text-[20px] mx-auto">Score</div>
+					<div class="text-[30px] mx-auto">{{ scores }}</div>
+				</div>
+				<div class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center">
+					<div class="text-[20px] mx-auto">Counts</div>
+					<div class="text-[30px] mx-auto">{{ counts }}</div>
+				</div>
+				<div class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center">
+					<div class="text-[20px] mx-auto">Acc</div>
+					<div class="text-[30px] mx-auto">{{ acc }}%</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div>Counts: {{ counts }}</div>
-	<div>Score: {{ scores }}</div>
 </template>
 
 <style></style>
