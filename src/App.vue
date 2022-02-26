@@ -117,56 +117,108 @@ document.body.addEventListener("keydown", (e) => {
 </script>
 
 <template>
-	<div class="flex justify-center">
-		<img src="./assets/logo.png" alt="vue logo" />
-	</div>
-	<div id="start-game" v-show="!isClick">
-		<div class="flex justify-center gap-4">
-			<button
-				class="btn btn-primary"
-				type="button"
-				@click.left="clickToStart"
-			>
-				CLICK TO START
-			</button>
-		</div>
-	</div>
-	<!-- Prepare stage -->
-	<div style="text-align: center" v-show="isClick" :class="timeText">
-		{{ timeCount / 1e3 }}
-	</div>
-	<!-- Countdown -->
 	<div
-		style="text-align: center"
-		:class="playTime <= 1e4 ? timeTextAlert : timeText"
-		v-show="timeCount === 0"
+		class="container mx-auto flex justify-center h-[33rem] min-w-[764px] m-20 p-20 bg-base-300 rounded-box"
+		id="background"
 	>
-		{{ playTime === 0 ? "TIME OUT!" : (playTime / 1e3).toFixed(2) + "s" }}
-	</div>
-	<div id="arrow-display">
-		<div
-			class="flex justify-center"
-			id="arrow-key-pattern-display"
-			v-show="timeCount === 0"
-		>
-			<div v-for="pattern in patternSet.arrowIcon">
-				<span v-html="pattern"></span>
-			</div>
-		</div>
-		<div class="grid justify-items-center" id="arrow-key-user-input">
-			<div class="inline-grid grid-cols-6">
-				<div v-for="input in inputKey">
-					<span v-html="arrowKey[input]"></span>
+		<div class="grid justify-items-center">
+			<div id="start-game-btn" v-show="!isClick">
+				<div class="flex justify-center gap-4">
+					<button
+						class="btn btn-primary"
+						type="button"
+						@click.left="clickToStart"
+					>
+						CLICK TO START
+					</button>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div>Counts: {{ counts }}</div>
-	<div>Scores: {{ scores }}</div>
-	<div>Pointer: {{ pointer }}</div>
-	<div>
-		Accuracy:
-		{{ (isNaN(accuracy) ? 0 : (accuracy * 100).toFixed(2)) + "%" }}
+		<div
+			v-show="isClick"
+			class="container relative mx-auto justify-items-center justify-center"
+		>
+			<!-- Prepare stage -->
+			<div
+				id="prepare-stage"
+				style="text-align: center"
+				:class="timeText"
+				class="text-[200px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+				v-show="!(timeCount === 0)"
+			>
+				{{ timeCount / 1e3 }}
+			</div>
+			<!-- Countdown -->
+			<div
+				id="countdown-play-time"
+				class="flex justify-center"
+				:class="playTime <= 1e4 ? timeTextAlert : timeText"
+				v-show="timeCount === 0"
+			>
+				{{
+					playTime === 0
+						? "TIME OUT!"
+						: (playTime / 1e3).toFixed(2) + "s"
+				}}
+			</div>
+			<div class="grid justify-items-center" id="arrow-display">
+				<div
+					class="flex"
+					id="arrow-key-pattern-display"
+					v-show="timeCount === 0"
+				>
+					<div v-for="pattern in patternSet.arrowIcon">
+						<span v-html="pattern"></span>
+					</div>
+				</div>
+				<div
+					class="grid justify-items-center h-[8rem]"
+					id="arrow-key-user-input"
+				>
+					<div class="inline-grid grid-cols-6">
+						<div v-for="input in inputKey">
+							<span v-html="arrowKey[input]"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- detail box -->
+			<div v-show="timeCount === 0" id="detail-box">
+				<div class="mx-auto w-[32rem] flex">
+					<div
+						class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center"
+					>
+						<div class="text-[20px] mx-auto">Counts</div>
+						<div class="text-[30px] mx-auto">{{ counts }}</div>
+					</div>
+					<div
+						class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center"
+					>
+						<div class="text-[20px] mx-auto">Scores</div>
+						<div class="text-[30px] mx-auto">{{ scores }}</div>
+					</div>
+					<div
+						class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center"
+					>
+						<div class="text-[20px] mx-auto">Accuracy</div>
+						<div class="text-[30px] mx-auto">
+							{{
+								(isNaN(accuracy)
+									? 0
+									: (accuracy * 100).toFixed(2)) + "%"
+							}}
+						</div>
+					</div>
+				</div>
+				<div id="progress-bar">
+					<progress
+						class="progress progress-primary w-100"
+						:value="playTime / 1e3"
+						max="30"
+					></progress>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
