@@ -18,6 +18,7 @@ const scores = ref(0);
 const counts = ref(0);
 const playTime = ref(30000);
 const timeCount = ref(3000);
+const pointer = ref(0);
 
 const accuracy = computed(() => scores.value / counts.value);
 
@@ -39,16 +40,18 @@ const countdown = setInterval(() => {
 
 const count = () => counts.value++;
 
-const checkScore = (input) => {
-	// should redesign
-	patternSet.value.keyCode.forEach((key, index) => {
-		if (key === input[index]) {
-			scores.value++;
-		}
-	});
+const checkScore = (keyCode) => {
+	if (keyCode === 32) pointer.value = -1;
+	if (patternSet.value.keyCode[pointer.value] === keyCode) {
+		scores.value++;
+	}
+	pointer.value++;
 };
 
-const clickToStart = () => (isClick.value = true);
+const clickToStart = () => {
+	isClick.value = true;
+	randomSet();
+};
 
 const restartGame = () => {};
 
@@ -70,7 +73,7 @@ document.body.addEventListener("keydown", (e) => {
 				inputSet.value.push(
 					inputKey.value.splice(0, inputKey.value.length)
 				);
-				checkScore(inputSet.value[inputSet.value.length - 1]);
+				checkScore(e.keyCode);
 				randomSet();
 				break;
 			// left
@@ -78,6 +81,7 @@ document.body.addEventListener("keydown", (e) => {
 				if (inputKey.value.length <= 5) {
 					inputKey.value.push(e.keyCode);
 					count();
+					checkScore(e.keyCode);
 				}
 				break;
 			// up
@@ -85,6 +89,7 @@ document.body.addEventListener("keydown", (e) => {
 				if (inputKey.value.length <= 5) {
 					inputKey.value.push(e.keyCode);
 					count();
+					checkScore(e.keyCode);
 				}
 				break;
 			// right
@@ -92,6 +97,7 @@ document.body.addEventListener("keydown", (e) => {
 				if (inputKey.value.length <= 5) {
 					inputKey.value.push(e.keyCode);
 					count();
+					checkScore(e.keyCode);
 				}
 				break;
 			// down
@@ -99,6 +105,7 @@ document.body.addEventListener("keydown", (e) => {
 				if (inputKey.value.length <= 5) {
 					inputKey.value.push(e.keyCode);
 					count();
+					checkScore(e.keyCode);
 				}
 				break;
 
@@ -131,13 +138,17 @@ document.body.addEventListener("keydown", (e) => {
 	<!-- Countdown -->
 	<div
 		style="text-align: center"
-		:class="playTime <= 10000 ? timeTextAlert : timeText"
+		:class="playTime <= 1e4 ? timeTextAlert : timeText"
 		v-show="timeCount === 0"
 	>
 		{{ playTime === 0 ? "TIME OUT!" : (playTime / 1e3).toFixed(2) + "s" }}
 	</div>
 	<div id="arrow-display">
-		<div class="flex justify-center" id="arrow-key-pattern-display">
+		<div
+			class="flex justify-center"
+			id="arrow-key-pattern-display"
+			v-show="timeCount === 0"
+		>
 			<div v-for="pattern in patternSet.arrowIcon">
 				<span v-html="pattern"></span>
 			</div>
@@ -152,6 +163,7 @@ document.body.addEventListener("keydown", (e) => {
 	</div>
 	<div>Counts: {{ counts }}</div>
 	<div>Scores: {{ scores }}</div>
+	<div>Pointer: {{ pointer }}</div>
 	<div>
 		Accuracy:
 		{{ (isNaN(accuracy) ? 0 : (accuracy * 100).toFixed(2)) + "%" }}
