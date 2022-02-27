@@ -118,7 +118,7 @@ document.body.addEventListener("keydown", (e) => {
 
 <template>
 	<div
-		class="container mx-auto flex justify-center h-[33rem] min-w-[764px] m-20 p-20 bg-base-300 rounded-box"
+		class="main-page mx-auto"
 		id="background"
 	>
 		<div class="grid justify-items-center">
@@ -136,7 +136,7 @@ document.body.addEventListener("keydown", (e) => {
 		</div>
 		<div
 			v-show="isClick"
-			class="container relative mx-auto justify-items-center justify-center"
+			class="prepare-bg mx-auto "
 		>
 			<!-- Prepare stage -->
 			<div
@@ -212,7 +212,7 @@ document.body.addEventListener("keydown", (e) => {
 				</div>
 				<div id="progress-bar">
 					<progress
-						class="progress progress-primary w-100"
+						class="countdown-bar"
 						:value="playTime / 1e3"
 						max="30"
 					></progress>
@@ -222,4 +222,24 @@ document.body.addEventListener("keydown", (e) => {
 	</div>
 </template>
 
-<style></style>
+<style>
+.main-page {
+	@apply container;
+	@apply flex justify-center;
+	@apply bg-base-300 rounded-box;
+	@apply m-20 p-20;
+	@apply h-[33rem] min-w-[764px];
+
+}
+.prepare-bg {
+	@apply container; 
+	@apply relative; 
+	@apply justify-items-center justify-center;
+}
+
+.countdown-bar {
+	@apply progress progress-primary;
+	@layer w-100;
+}
+
+</style>
