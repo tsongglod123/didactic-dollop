@@ -129,9 +129,6 @@ const hitSound = (sound) => {
 	audio.loop = false;
 	audio.play();
 }
-//Background sound
-const BG = new Audio(BGSound);
-// BG.play();
 
 </script>
 
