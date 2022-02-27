@@ -2,6 +2,8 @@
 import { ref, computed } from "vue";
 import { arrowKey, arrowKeyFilled, arrowKeyCode } from "./scripts/arrow.js";
 
+import arrowSound from './assets/hitSound.wav';
+
 const timeText = ref("font-mono text-4xl");
 const timeTextAlert = ref("font-mono text-4xl text-red-600");
 
@@ -53,7 +55,7 @@ const clickToStart = () => {
 	randomSet();
 };
 
-const restartGame = () => {};
+const restartGame = () => { };
 
 const randomSet = () => {
 	patternSet.value.keyCode.splice(0, patternSet.value.keyCode.length);
@@ -82,6 +84,7 @@ document.body.addEventListener("keydown", (e) => {
 					inputKey.value.push(e.keyCode);
 					count();
 					checkScore(e.keyCode);
+					hitSound();
 				}
 				break;
 			// up
@@ -90,6 +93,7 @@ document.body.addEventListener("keydown", (e) => {
 					inputKey.value.push(e.keyCode);
 					count();
 					checkScore(e.keyCode);
+					hitSound();
 				}
 				break;
 			// right
@@ -98,6 +102,7 @@ document.body.addEventListener("keydown", (e) => {
 					inputKey.value.push(e.keyCode);
 					count();
 					checkScore(e.keyCode);
+					hitSound();
 				}
 				break;
 			// down
@@ -106,6 +111,7 @@ document.body.addEventListener("keydown", (e) => {
 					inputKey.value.push(e.keyCode);
 					count();
 					checkScore(e.keyCode);
+					hitSound();
 				}
 				break;
 
@@ -114,6 +120,14 @@ document.body.addEventListener("keydown", (e) => {
 		}
 	}
 });
+
+//Sound when hit arrow
+const hitSound = () => {
+	const audio = new Audio(arrowSound)
+	audio.loop = false;
+	audio.play();
+}
+
 </script>
 
 <template>
@@ -124,20 +138,11 @@ document.body.addEventListener("keydown", (e) => {
 		<div class="grid justify-items-center">
 			<div id="start-game-btn" v-show="!isClick">
 				<div class="flex justify-center gap-4">
-					<button
-						class="btn btn-primary"
-						type="button"
-						@click.left="clickToStart"
-					>
-						CLICK TO START
-					</button>
+					<button class="btn btn-primary" type="button" @click.left="clickToStart">CLICK TO START</button>
 				</div>
 			</div>
 		</div>
-		<div
-			v-show="isClick"
-			class="container relative mx-auto justify-items-center justify-center"
-		>
+		<div v-show="isClick" class="container relative mx-auto justify-items-center justify-center">
 			<!-- Prepare stage -->
 			<div
 				id="prepare-stage"
@@ -145,9 +150,7 @@ document.body.addEventListener("keydown", (e) => {
 				:class="timeText"
 				class="text-[200px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
 				v-show="!(timeCount === 0)"
-			>
-				{{ timeCount / 1e3 }}
-			</div>
+			>{{ timeCount / 1e3 }}</div>
 			<!-- Countdown -->
 			<div
 				id="countdown-play-time"
@@ -162,19 +165,12 @@ document.body.addEventListener("keydown", (e) => {
 				}}
 			</div>
 			<div class="grid justify-items-center" id="arrow-display">
-				<div
-					class="flex"
-					id="arrow-key-pattern-display"
-					v-show="timeCount === 0"
-				>
+				<div class="flex" id="arrow-key-pattern-display" v-show="timeCount === 0">
 					<div v-for="pattern in patternSet.arrowIcon">
 						<span v-html="pattern"></span>
 					</div>
 				</div>
-				<div
-					class="grid justify-items-center h-[8rem]"
-					id="arrow-key-user-input"
-				>
+				<div class="grid justify-items-center h-[8rem]" id="arrow-key-user-input">
 					<div class="inline-grid grid-cols-6">
 						<div v-for="input in inputKey">
 							<span v-html="arrowKey[input]"></span>
@@ -185,21 +181,15 @@ document.body.addEventListener("keydown", (e) => {
 			<!-- detail box -->
 			<div v-show="timeCount === 0" id="detail-box">
 				<div class="mx-auto w-[32rem] flex">
-					<div
-						class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center"
-					>
+					<div class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center">
 						<div class="text-[20px] mx-auto">Counts</div>
 						<div class="text-[30px] mx-auto">{{ counts }}</div>
 					</div>
-					<div
-						class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center"
-					>
+					<div class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center">
 						<div class="text-[20px] mx-auto">Scores</div>
 						<div class="text-[30px] mx-auto">{{ scores }}</div>
 					</div>
-					<div
-						class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center"
-					>
+					<div class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center">
 						<div class="text-[20px] mx-auto">Accuracy</div>
 						<div class="text-[30px] mx-auto">
 							{{
@@ -211,11 +201,7 @@ document.body.addEventListener("keydown", (e) => {
 					</div>
 				</div>
 				<div id="progress-bar">
-					<progress
-						class="progress progress-primary w-100"
-						:value="playTime / 1e3"
-						max="30"
-					></progress>
+					<progress class="progress progress-primary w-100" :value="playTime / 1e3" max="30"></progress>
 				</div>
 			</div>
 		</div>
