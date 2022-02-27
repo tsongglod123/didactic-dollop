@@ -17,28 +17,31 @@ const patternSet = ref({
 
 const isClick = ref(false);
 
+const PLAY_TIME = 30000;
+const COUNTDOWN_ON_THREE = 3000;
+
 const scores = ref(0);
 const counts = ref(0);
-const playTime = ref(30000);
-const timeCount = ref(3000);
+const playTime = ref(PLAY_TIME);
+const timeCount = ref(COUNTDOWN_ON_THREE);
 const pointer = ref(0);
 
 const accuracy = computed(() => scores.value / counts.value);
 
-const prepareToPlay = setInterval(() => {
-    if (isClick.value) {
-        timeCount.value === 0
-            ? clearInterval(prepareToPlay)
-            : (timeCount.value -= 1000);
-    }
+let prepareToPlay = setInterval(() => {
+	if (isClick.value) {
+		timeCount.value === 0
+			? clearInterval(prepareToPlay)
+			: (timeCount.value -= 1000);
+	}
 }, 1000);
 
-const countdown = setInterval(() => {
-    if (timeCount.value === 0) {
-        playTime.value === 0
-            ? clearInterval(countdown)
-            : (playTime.value -= 10);
-    }
+let countdown = setInterval(() => {
+	if (timeCount.value === 0) {
+		playTime.value === 0
+			? clearInterval(countdown)
+			: (playTime.value -= 10);
+	}
 }, 10);
 
 const count = () => counts.value++;
@@ -56,7 +59,34 @@ const clickToStart = () => {
     randomSet();
 };
 
-const restartGame = () => {};
+const restartGame = () => {
+	resetTime();
+	scores.value = 0;
+	counts.value = 0;
+	playTime.value = PLAY_TIME;
+	timeCount.value = COUNTDOWN_ON_THREE;
+	pointer.value = 0;
+	randomSet();
+	inputKey.value.splice(0, inputKey.value.length);
+	inputSet.value.splice(0, inputSet.value.length);
+};
+
+const resetTime = () => {
+	prepareToPlay = setInterval(() => {
+		if (isClick.value) {
+			timeCount.value === 0
+				? clearInterval(prepareToPlay)
+				: (timeCount.value -= 1000);
+		}
+	}, 1000);
+	countdown = setInterval(() => {
+		if (timeCount.value === 0) {
+			playTime.value === 0
+				? clearInterval(countdown)
+				: (playTime.value -= 10);
+		}
+	}, 10);
+};
 
 const randomSet = () => {
     patternSet.value.keyCode.splice(0, patternSet.value.keyCode.length);
@@ -124,9 +154,9 @@ document.body.addEventListener("keydown", (e) => {
 
 //Sound when hit arrow
 const hitSound = (sound) => {
-    const audio = new Audio(sound);
-    audio.loop = false;
-    audio.play();
+	const audio = new Audio(sound);
+	audio.loop = false;
+	audio.play();
 };
 </script>
 
