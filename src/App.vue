@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import { arrowKey, arrowKeyFilled, arrowKeyCode } from "./scripts/arrow.js";
 
 //Sound
-import arrowSound from './assets/hitSound.wav';
+import arrowSound from "./assets/hitSound.wav";
 
 const timeText = ref("font-mono text-4xl");
 const timeTextAlert = ref("font-mono text-4xl text-red-600");
@@ -17,15 +17,18 @@ const patternSet = ref({
 
 const isClick = ref(false);
 
+const PLAY_TIME = 30000;
+const COUNTDOWN_ON_THREE = 3000;
+
 const scores = ref(0);
 const counts = ref(0);
-const playTime = ref(30000);
-const timeCount = ref(3000);
+const playTime = ref(PLAY_TIME);
+const timeCount = ref(COUNTDOWN_ON_THREE);
 const pointer = ref(0);
 
 const accuracy = computed(() => scores.value / counts.value);
 
-const prepareToPlay = setInterval(() => {
+let prepareToPlay = setInterval(() => {
 	if (isClick.value) {
 		timeCount.value === 0
 			? clearInterval(prepareToPlay)
@@ -33,7 +36,7 @@ const prepareToPlay = setInterval(() => {
 	}
 }, 1000);
 
-const countdown = setInterval(() => {
+let countdown = setInterval(() => {
 	if (timeCount.value === 0) {
 		playTime.value === 0
 			? clearInterval(countdown)
@@ -56,7 +59,34 @@ const clickToStart = () => {
 	randomSet();
 };
 
-const restartGame = () => { };
+const restartGame = () => {
+	resetTime();
+	scores.value = 0;
+	counts.value = 0;
+	playTime.value = PLAY_TIME;
+	timeCount.value = COUNTDOWN_ON_THREE;
+	pointer.value = 0;
+	randomSet();
+	inputKey.value.splice(0, inputKey.value.length);
+	inputSet.value.splice(0, inputSet.value.length);
+};
+
+const resetTime = () => {
+	prepareToPlay = setInterval(() => {
+		if (isClick.value) {
+			timeCount.value === 0
+				? clearInterval(prepareToPlay)
+				: (timeCount.value -= 1000);
+		}
+	}, 1000);
+	countdown = setInterval(() => {
+		if (timeCount.value === 0) {
+			playTime.value === 0
+				? clearInterval(countdown)
+				: (playTime.value -= 10);
+		}
+	}, 10);
+};
 
 const randomSet = () => {
 	patternSet.value.keyCode.splice(0, patternSet.value.keyCode.length);
@@ -127,39 +157,45 @@ const hitSound = (sound) => {
 	const audio = new Audio(sound);
 	audio.loop = false;
 	audio.play();
-}
-
+};
 </script>
 
 <template>
-	<div
-		class="main-page mx-auto"
-		id="background"
-	>
+	<div class="main-page mx-auto" id="background">
+		<!-- main page -->
 		<div class="grid justify-items-center">
 			<div id="start-game-btn" v-show="!isClick">
 				<div class="text-5xl project-title">Didactic-Dollop</div>
-				<div class="flex justify-center gap-4">
+				<div class="flex justify-center">
 					<button
 						class="btn btn-primary"
 						type="button"
-						@click.left="clickToStart(); hitSound();"
-					>CLICK TO START</button>
+						@click.left="clickToStart"
+					>
+						CLICK TO START
+					</button>
 				</div>
 			</div>
 		</div>
-		<div
-			v-show="isClick"
-			class="prepare-bg mx-auto">
-			<!-- Prepare stage -->
-			<div id="prepare-stage" style="text-align: center;"
+		<!-- game stage -->
+		<div v-show="isClick" class="prepare-bg mx-auto">
+			<!-- prepare stage -->
+			<div
+				id="prepare-stage"
+				style="text-align: center"
 				:class="[timeText, 'prepare-countdown', 'text-[200px]']"
-				v-show="!(timeCount === 0)"
-			>{{ timeCount / 1e3 }}</div>
-			<!-- Countdown -->
+				v-show="timeCount !== 0"
+			>
+				{{ timeCount / 1e3 }}
+			</div>
+			<!-- play time countdown -->
 			<div
 				id="countdown-play-time"
-				:class="[playTime <= 1e4 ? timeTextAlert : timeText, 'flex', 'justify-center']"
+				:class="[
+					playTime <= 1e4 ? timeTextAlert : timeText,
+					'flex',
+					'justify-center',
+				]"
 				v-show="timeCount === 0"
 			>
 				{{
@@ -168,33 +204,56 @@ const hitSound = (sound) => {
 						: (playTime / 1e3).toFixed(2) + "s"
 				}}
 			</div>
-			<div class="grid justify-items-center" id="arrow-display">
-				<div class="flex" id="arrow-key-pattern-display" v-show="timeCount === 0">
-					<div v-for="pattern in patternSet.arrowIcon">
-						<span v-html="pattern"></span>
-					</div>
-				</div>
-				<div class="grid justify-items-center h-[8rem]" id="arrow-key-user-input">
-					<div class="inline-grid grid-cols-6">
-						<div v-for="input in inputKey">
-							<span v-html="arrowKey[input]"></span>
+			<!-- arrow section -->
+			<div v-show="playTime !== 0">
+				<div class="grid justify-items-center" id="arrow-display">
+					<div
+						class="flex"
+						id="arrow-key-pattern-display"
+						v-show="timeCount === 0"
+					>
+						<div v-for="pattern in patternSet.arrowIcon">
+							<span v-html="pattern"></span>
 						</div>
 					</div>
+					<div
+						class="grid justify-items-center h-[8rem]"
+						id="arrow-key-user-input"
+					>
+						<div class="inline-grid grid-cols-6">
+							<div v-for="input in inputKey">
+								<span v-html="arrowKey[input]"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div v-show="playTime === 0">
+				<div class="flex justify-center">
+					<button
+						class="btn btn-primary"
+						type="button"
+						@click.left="restartGame"
+					>
+						RESTART
+					</button>
 				</div>
 			</div>
 			<!-- detail box -->
 			<div v-show="timeCount === 0" id="detail-box">
 				<div class="mx-auto w-[32rem] flex">
-					<div class="info-box mx-auto ">
+					<div class="info-box mx-auto">
 						<div class="text-[20px] mx-auto font-bold">Counts</div>
 						<div class="text-[30px] mx-auto">{{ counts }}</div>
 					</div>
-					<div class="info-box mx-auto ">
+					<div class="info-box mx-auto">
 						<div class="text-[20px] mx-auto font-bold">Scores</div>
 						<div class="text-[30px] mx-auto">{{ scores }}</div>
 					</div>
 					<div class="info-box mx-auto">
-						<div class="text-[20px] mx-auto font-bold">Accuracy</div>
+						<div class="text-[20px] mx-auto font-bold">
+							Accuracy
+						</div>
 						<div class="text-[30px] mx-auto">
 							{{
 								(isNaN(accuracy)
@@ -217,10 +276,10 @@ const hitSound = (sound) => {
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap");
 
 .project-title {
-	font-family: 'Libre Barcode 39 Text', cursive;
+	font-family: "Libre Barcode 39 Text", cursive;
 }
 
 .main-page {
@@ -229,11 +288,10 @@ const hitSound = (sound) => {
 	@apply bg-base-300 rounded-box;
 	@apply m-20 pt-10 p-20;
 	@apply h-[33rem] min-w-[764px];
-
 }
 .prepare-bg {
-	@apply container; 
-	@apply relative; 
+	@apply container;
+	@apply relative;
 	@apply justify-items-center justify-center;
 }
 
@@ -244,7 +302,7 @@ const hitSound = (sound) => {
 
 .info-box {
 	@apply card;
-	@apply m-2 px-10 py-5; 
+	@apply m-2 px-10 py-5;
 	@apply bg-base-200;
 	@apply grid justify-center;
 }
