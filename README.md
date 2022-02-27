@@ -1,13 +1,17 @@
 # INT203 project
+This project is for learning purposes only
 
 **Table of Contents**
   - [Get Started](#get-started)
+    - [Requirements](#requirements)
+    - [How to play](#how-to-play)
   - [Frameworks](#frameworks)
   - [Team](#team)
-  - [Instructor](#instructor)
+  - [Inspirations](#inspirations)
+  - [Instructors](#instructors)
 
 ## Get Started
-**Requirements**
+### Requirements
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Node.js](https://nodejs.org/en/download/)
 - [Git](https://git-scm.com/downloads) or [Git Desktop](https://desktop.github.com/)
@@ -24,6 +28,10 @@ To participate, please follow these steps
    npm run dev
    ```
 3. Enjoy!
+
+### How to play
+- Press the arrow key to "match"
+- Press the space key to "next pattern"
 
 ## Frameworks
 **JS Frameworks**
@@ -44,5 +52,8 @@ To participate, please follow these steps
 | 4    | 63130500048 | [Thanaphon Sukkasem](https://github.com/hunnymc)              |
 | 5    | 63130500053 | [Thanatorn Roswan](https://github.com/bombenten)            |
 
-## Instructor
+## Inspirations
+- [Audition](https://audition.playpark.com/th-th/)
+
+## Instructors
 [Umaporn Supasitthimethee](https://github.com/umaporn-sup)
