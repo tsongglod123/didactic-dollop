@@ -138,7 +138,7 @@ const hitSound = (sound) => {
 	>
 		<div class="grid justify-items-center">
 			<div id="start-game-btn" v-show="!isClick">
-				<div class="title">Didactic-Dollop</div>
+				<div class="text-5xl project-title">Didactic-Dollop</div>
 				<div class="flex justify-center gap-4">
 					<button
 						class="btn btn-primary"
@@ -153,14 +153,13 @@ const hitSound = (sound) => {
 			class="prepare-bg mx-auto">
 			<!-- Prepare stage -->
 			<div id="prepare-stage" style="text-align: center;"
-				:class="timeText"
-				class="prepare-countdown text-[200px]"
+				:class="[timeText, 'prepare-countdown', 'text-[200px]']"
 				v-show="!(timeCount === 0)"
 			>{{ timeCount / 1e3 }}</div>
 			<!-- Countdown -->
 			<div
 				id="countdown-play-time"
-				:class="[playTime <= 1e4 ? timeTextAlert : timeText, 'flex justify-center']"
+				:class="[playTime <= 1e4 ? timeTextAlert : timeText, 'flex', 'justify-center']"
 				v-show="timeCount === 0"
 			>
 				{{
@@ -187,15 +186,15 @@ const hitSound = (sound) => {
 			<div v-show="timeCount === 0" id="detail-box">
 				<div class="mx-auto w-[32rem] flex">
 					<div class="info-box mx-auto ">
-						<div class="text-[20px] mx-auto">Counts</div>
+						<div class="text-[20px] mx-auto font-bold">Counts</div>
 						<div class="text-[30px] mx-auto">{{ counts }}</div>
 					</div>
 					<div class="info-box mx-auto ">
-						<div class="text-[20px] mx-auto">Scores</div>
+						<div class="text-[20px] mx-auto font-bold">Scores</div>
 						<div class="text-[30px] mx-auto">{{ scores }}</div>
 					</div>
 					<div class="info-box mx-auto">
-						<div class="text-[20px] mx-auto">Accuracy</div>
+						<div class="text-[20px] mx-auto font-bold">Accuracy</div>
 						<div class="text-[30px] mx-auto">
 							{{
 								(isNaN(accuracy)
@@ -219,10 +218,11 @@ const hitSound = (sound) => {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap');
-.title{
+
+.project-title {
 	font-family: 'Libre Barcode 39 Text', cursive;
-	color: white;
 }
+
 .main-page {
 	@apply container;
 	@apply flex justify-center;
