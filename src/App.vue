@@ -4,7 +4,6 @@ import { arrowKey, arrowKeyFilled, arrowKeyCode } from "./scripts/arrow.js";
 
 //Sound
 import arrowSound from './assets/hitSound.wav';
-import BGSound from './assets/BGSound.mp3';
 
 const timeText = ref("font-mono text-4xl");
 const timeTextAlert = ref("font-mono text-4xl text-red-600");
@@ -139,7 +138,7 @@ const hitSound = (sound) => {
 	>
 		<div class="grid justify-items-center">
 			<div id="start-game-btn" v-show="!isClick">
-				<font face="verdana" size="20px" color="#F28C18">Didactic-Dollop</font>
+				<div class="title">Didactic-Dollop</div>
 				<div class="flex justify-center gap-4">
 					<button
 						class="btn btn-primary"
@@ -219,11 +218,16 @@ const hitSound = (sound) => {
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap');
+.title{
+	font-family: 'Libre Barcode 39 Text', cursive;
+	color: white;
+}
 .main-page {
 	@apply container;
 	@apply flex justify-center;
 	@apply bg-base-300 rounded-box;
-	@apply m-20 p-20;
+	@apply m-20 pt-10 p-20;
 	@apply h-[33rem] min-w-[764px];
 
 }
