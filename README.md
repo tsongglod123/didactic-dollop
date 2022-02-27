@@ -56,4 +56,4 @@ To participate, please follow these steps
 - [Audition](https://audition.playpark.com/th-th/)
 
 ## Instructors
-[Umaporn Supasitthimethee](https://github.com/umaporn-sup)
+- [Umaporn Supasitthimethee](https://github.com/umaporn-sup)
