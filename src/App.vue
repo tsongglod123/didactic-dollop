@@ -158,14 +158,13 @@ const BG = new Audio(BGSound);
 			<!-- Prepare stage -->
 			<div id="prepare-stage" style="text-align: center;"
 				:class="timeText"
-				class="text-[200px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+				class="prepare-countdown text-[200px]"
 				v-show="!(timeCount === 0)"
 			>{{ timeCount / 1e3 }}</div>
 			<!-- Countdown -->
 			<div
 				id="countdown-play-time"
-				class="flex justify-center"
-				:class="playTime <= 1e4 ? timeTextAlert : timeText"
+				:class="[playTime <= 1e4 ? timeTextAlert : timeText, 'flex justify-center']"
 				v-show="timeCount === 0"
 			>
 				{{
@@ -191,15 +190,15 @@ const BG = new Audio(BGSound);
 			<!-- detail box -->
 			<div v-show="timeCount === 0" id="detail-box">
 				<div class="mx-auto w-[32rem] flex">
-					<div class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center">
+					<div class="info-box mx-auto ">
 						<div class="text-[20px] mx-auto">Counts</div>
 						<div class="text-[30px] mx-auto">{{ counts }}</div>
 					</div>
-					<div class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center">
+					<div class="info-box mx-auto ">
 						<div class="text-[20px] mx-auto">Scores</div>
 						<div class="text-[30px] mx-auto">{{ scores }}</div>
 					</div>
-					<div class="card mx-auto m-2 px-10 py-5 bg-base-200 grid justify-center">
+					<div class="info-box mx-auto">
 						<div class="text-[20px] mx-auto">Accuracy</div>
 						<div class="text-[30px] mx-auto">
 							{{
@@ -242,4 +241,15 @@ const BG = new Audio(BGSound);
 	@layer w-100;
 }
 
+.info-box {
+	@apply card;
+	@apply m-2 px-10 py-5; 
+	@apply bg-base-200;
+	@apply grid justify-center;
+}
+
+.prepare-countdown {
+	@apply absolute top-1/2 left-1/2;
+	@apply transform -translate-x-1/2 -translate-y-1/2;
+}
 </style>
