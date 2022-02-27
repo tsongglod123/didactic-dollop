@@ -86,7 +86,7 @@ document.body.addEventListener("keydown", (e) => {
 					inputKey.value.push(e.keyCode);
 					count();
 					checkScore(e.keyCode);
-					hitSound();
+					hitSound(arrowSound);
 				}
 				break;
 			// up
@@ -95,7 +95,7 @@ document.body.addEventListener("keydown", (e) => {
 					inputKey.value.push(e.keyCode);
 					count();
 					checkScore(e.keyCode);
-					hitSound();
+					hitSound(arrowSound);
 				}
 				break;
 			// right
@@ -104,7 +104,7 @@ document.body.addEventListener("keydown", (e) => {
 					inputKey.value.push(e.keyCode);
 					count();
 					checkScore(e.keyCode);
-					hitSound();
+					hitSound(arrowSound);
 				}
 				break;
 			// down
@@ -113,7 +113,7 @@ document.body.addEventListener("keydown", (e) => {
 					inputKey.value.push(e.keyCode);
 					count();
 					checkScore(e.keyCode);
-					hitSound();
+					hitSound(arrowSound);
 				}
 				break;
 
@@ -124,8 +124,8 @@ document.body.addEventListener("keydown", (e) => {
 });
 
 //Sound when hit arrow
-const hitSound = () => {
-	const audio = new Audio(arrowSound);
+const hitSound = (sound) => {
+	const audio = new Audio(sound);
 	audio.loop = false;
 	audio.play();
 }
