@@ -2,7 +2,9 @@
 import { ref, computed } from "vue";
 import { arrowKey, arrowKeyFilled, arrowKeyCode } from "./scripts/arrow.js";
 
+//Sound
 import arrowSound from './assets/hitSound.wav';
+import BGSound from './assets/BGSound.mp3';
 
 const timeText = ref("font-mono text-4xl");
 const timeTextAlert = ref("font-mono text-4xl text-red-600");
@@ -123,22 +125,30 @@ document.body.addEventListener("keydown", (e) => {
 
 //Sound when hit arrow
 const hitSound = () => {
-	const audio = new Audio(arrowSound)
+	const audio = new Audio(arrowSound);
 	audio.loop = false;
 	audio.play();
 }
+//Background sound
+const BG = new Audio(BGSound);
+// BG.play();
 
 </script>
 
 <template>
 	<div
-		class="container mx-auto flex justify-center h-[33rem] min-w-[764px] m-20 p-20 bg-base-300 rounded-box"
+		class="container mx-auto flex justify-center h-[33rem] min-w-[764px] m-20 pt-5 p-20 bg-base-300 rounded-box"
 		id="background"
 	>
 		<div class="grid justify-items-center">
 			<div id="start-game-btn" v-show="!isClick">
+				<font face="verdana" size="20px" color="#F28C18">Didactic-Dollop</font>
 				<div class="flex justify-center gap-4">
-					<button class="btn btn-primary" type="button" @click.left="clickToStart">CLICK TO START</button>
+					<button
+						class="btn btn-primary"
+						type="button"
+						@click.left="clickToStart(); hitSound();"
+					>CLICK TO START</button>
 				</div>
 			</div>
 		</div>
